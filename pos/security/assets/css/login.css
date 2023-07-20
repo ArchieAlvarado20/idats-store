@@ -1,0 +1,101 @@
+
+body{
+    background-image: url('../img/photo4.jpg');
+  
+}
+button{
+    width: 50%;
+    height: 75%;
+    margin-top: 10px;
+}
+a{
+    padding-left: 15px;
+    padding-top: 5px;
+}
+
+.card-header h3{
+    padding-top: 10px;
+    
+}
+.form-group button{
+    background-color: #d63384;
+    border-radius: 10px;
+    border-color: #d63384;
+    color: white;
+}
+.form-group .btn:active{
+    border-radius: 10px;
+    border-color: #d63384;
+    color: white;
+}
+    .form-group .btn:hover{
+        background-color: #e3398d;
+        backdrop-filter: blur(20px);
+        color: white;
+    }
+    .form-group a{
+        color: #d63383;
+        text-decoration: none;   
+    }
+    .form-group label{
+        color: black;
+        text-decoration: none;   
+    }
+    .form-group a:hover {
+        color: #d63383;
+        text-decoration: underline;
+    }
+    .form-group .form-control{
+        box-shadow: #d63383;
+        text-shadow: #d63383;
+        
+    }
+.card{
+    margin-top: 120px;
+    background-color: transparent;
+    backdrop-filter: blur(200px);
+    border-width: 2px;
+    border-radius: 30px;
+    
+}
+.card-header{
+        background-color: transparent;
+        color: black;
+        border-color: #d63384;
+        border-radius: 10px;
+        border-width: 2px;
+    
+    }
+    
+.navbar{
+    opacity:50%;
+}
+.nav-item a{
+    opacity: 100%;
+}
+.register{
+    color: #d63383;
+    text-decoration: none;
+}
+.register a{
+    color: #d63383;
+    text-decoration: none;
+}
+.register a:hover{
+        text-decoration: underline;
+        color: #e3398d;
+}
+.alert{
+    background-color: #e3398d;
+    color: white;
+}
+hr{
+    color: #d63384;
+    border-width: 2px;
+}
+.send{
+   
+    float: inline-start;
+    margin-right: 100px;
+}
+
