@@ -43,6 +43,11 @@
 <script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+
 <!-- Bootsrap -->
 <script src="dist/js/jquery-3.7.0.min.js"></script>
 <script src="dist/js/bootstrap.bundle.min.js"></script>
@@ -52,7 +57,11 @@
 <script defer src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script defer src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script defer src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="dist/js/jquery.tabledit.min.js"></script>
 <script src="dist/js/demo.js"></script>
+<script src='dist/js/table.js'></script>
 <script>
             //fade-out alert
             $('.alert').show();
@@ -60,25 +69,9 @@ setTimeout(function() {
     $('.alert').fadeOut(400);
 }, 5000);
 
- //data table script
- $(document).ready(function(){
-    $('#myTable').DataTable({
-      "order": [[ 0, 'desc' ], [ 1, 'desc' ]],
-      "pagingType": "full_numbers",
-      "lengthMenu":[
-        [10, 25, 50, -1],
-        [10, 25, 50, "All"],
-      ],
-      
-      responsive: true,
-      language: {
-        search: "_INPUT_",
-        searchPlaceholder: "Search here...",
-      }
-    })
-  });
 
 </script>
+
 
 
 

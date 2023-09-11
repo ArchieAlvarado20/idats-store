@@ -1,19 +1,4 @@
 <?php
-$menu = " menu-open";
-$active_main = " active";
-$active_dashboard = "";
-$active_product = "";
-$active_brand = "";
-$active_category = "";
-$stock_menu = "";
-$stock_main = "";
-$active_stocks = "";
-$active_logs = "";
-$active_critical = "";
-$active_pricing = " active";
-$user_menu="";
-$user_main="";
-$active_user= "";
 require_once('partials/_head.php');
 require_once('partials/_sidebar.php');
 ?>
@@ -79,13 +64,13 @@ require_once('partials/_sidebar.php');
                               <td class="text-center"><?= $transaction['pcode'] ?></td>
                               <td class="text-center" ><?= $transaction['barcode'] ?></td>
                               <td class="text-center" style="font-weight:bolder"><?= $transaction['description'] ?></td>
-                              <td class="text-center"><?= $transaction['cost'] ?></td>
-                              <td class="text-center"><?= $transaction['price'] ?></td>
-                              <td class="text-center"><?= $transaction['profit'] ?></td>
+                              <td class="text-center">₱&nbsp;<?= $transaction['cost'] ?></td>
+                              <td class="text-center">₱&nbsp;<?= $transaction['price'] ?></td>
+                              <td class="text-center">₱&nbsp;<?= $transaction['profit'] ?></td>
                               <td class="text-center"><?= $transaction['percent'] ?>%</td>
                               <td class="text-center"><?= $transaction['date'] ?></td>
                               <td  class="text-center">
-                              <a href="pricing-edit.php?id=<?= $transaction['id'];?>" class="btn btn-sm btn-success m-0"><i class="fa fa-edit" title="Update price for this product"></i> </a>              
+                              <a href="pricing-edit.php?id=<?= $transaction['id'];?>" class="btn btn-sm btn-success m-0"><i class="fa fa-dollar -sign" title="Update price for this product"></i> </a>              
                               </td>
                               
                             </tr>
@@ -120,7 +105,6 @@ require_once('partials/_sidebar.php');
   <?php
   require_once('partials/_footer.php');
   require_once('partials/_scripts.php');
-  require_once('product-ajax.php');
   ?>
  
 

@@ -14,6 +14,7 @@ $active_pricing = "";
 $user_menu="";
 $user_main="";
 $active_user= "";
+$active_supplier = "";
 require_once('partials/_head.php');
 require_once('partials/_sidebar.php');
 ?>
@@ -36,11 +37,11 @@ require_once('partials/_sidebar.php');
         <div class="col-sm-12">
             <h1 class="fw-bold text-center" style="font-weight: bolder;">Critical Items</h1>
           </div>
-          <div class="col-sm-12">
+          <!-- <div class="col-sm-12">
             <ol class="breadcrumb float-sm-right">
             <a href="stock-create.php" class="btn btn-primary text-light">Add stock</a>     
             </ol>
-          </div>
+          </div> -->
         </div>
       </div><!-- /.container-fluid -->
     </section>
@@ -67,7 +68,8 @@ require_once('partials/_sidebar.php');
                   </thead>
                   <tbody>
                   <?php
-                   $users = getAll('tblproduct');
+                   $users = "SELECT * FROM tblproduct WHERE status = 1";
+                   $users = mysqli_query($con, $users);
                    if(mysqli_num_rows($users) > 0 )
                    {
                        foreach($users as $transaction)
@@ -82,7 +84,7 @@ require_once('partials/_sidebar.php');
                               <td class="text-center"><?= $transaction['category'] ?></td>
                               <td class="text-center"><?= $transaction['re_order'] ?></td>
                               <td class="text-center"><?= $transaction['qty'] ?></td> 
-                              <td class="text-center"><?= $transaction['status'] == 1 ? "<span class='badge badge-danger text-sm'>Critical</span>" : "<span class='badge badge-danger text-sm'>Critical</span>"?></td> 
+                              <td class="text-center"><?= $transaction['status'] == '1' ? "<span class='badge badge-danger text-sm'>Critical</span>" : "<span class='badge badge-danger text-sm'>Critical</span>"?></td> 
                             </tr>
                          
                             
@@ -115,7 +117,7 @@ require_once('partials/_sidebar.php');
   <?php
   require_once('partials/_footer.php');
   require_once('partials/_scripts.php');
-  require_once('product-ajax.php');
+
   ?>
  
 

@@ -1,8 +1,8 @@
 <div class="wrapper ">
 
   <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center bg-dark">
-    <img class="animation__shake" src="dist/img/shopping-basket.png" alt="Idats Store" height="60" width="60">
+  <div class="preloader flex-column justify-content-center align-items-center bg-dark" id="content">
+    <img class="loading" src="dist/img/pulse.gif" alt="Idats Store" height="100" width="100" id="loading">
   </div>
 
   <!-- Navbar -->

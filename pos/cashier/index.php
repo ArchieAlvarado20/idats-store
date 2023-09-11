@@ -1,19 +1,4 @@
 <?php
-$menu = "";
-$active_main = "";
-$active_dashboard = "";
-$active_product = "";
-$active_brand = "";
-$active_category = "";
-$stock_menu = "";
-$stock_main = "";
-$active_stocks = "";
-$active_logs = "";
-$active_critical = "";
-$active_pricing = "";
-$user_menu="";
-$user_main="";
-$active_user= "";
 require_once('partials/_head.php');
 require_once('partials/_sidebar.php');
 require_once('modals/cart-modal.php');
@@ -31,14 +16,14 @@ require_once('modals/cart-modal.php');
     ?>
     <div class="content-wrapper">
   <section class="content-header">
+  <?= alertMessage();?>
     <div class="container col-md-12">
       <div class="row">
         <div class="col-md-12">
         <div class="card shadow bg-white">
-         
           <div class="card-header d-flex">
           <div class="col-sm-8 mt-4">
-          <p style="font-weight:bolder; font-size: 60px; padding-left:500px; width: 3000px;"><span id="time"></span>.</p>
+          <p style="font-weight:bolder; font-size: 60px; padding-left:500px; width: 1000px;"><span id="time"></span>.</p>
           <h4 class="fw-bold">Transaction No.: &nbsp; <strong>00000000000000</strong></h4>
           </div>
           <div class="col-sm-4 text-right mt-4">
@@ -65,22 +50,24 @@ require_once('modals/cart-modal.php');
                   </thead>
                   <tbody>
                   <?php
-                   $users = getAll('vw_sold_items');
-                   if(mysqli_num_rows($users) > 0 )
+                   $users = "SELECT * FROM vw_sold_items WHERE status='Pending'";
+                   $users_run = mysqli_query($con,$users);
+                   if(mysqli_num_rows($users_run) > 0 )
                    {
-                       foreach($users as $transaction)
+                       foreach($users_run as $transaction)
                        {
+                        $total = ($transaction['price'] * $transaction['qty']);
                           ?>
                             <tr>
                             <td class="text-center" style="font-weight:bolder"><?= $transaction['id'] ?></td>
                               <td class="text-center"><?= $transaction['pcode'] ?></td>
-                              <td class="text-center" style="font-weight:bolder;width: 500px;"><?= $transaction['description'] ?></td>
+                              <td class="text-center"><?= $transaction['description'] ?></td>
                               <td class="text-center"><?= $transaction['price'] ?></td>
                               <td class="text-center"><?= $transaction['qty'] ?></td>
                               <td class="text-center"><?= $transaction['disc'] ?></td>
-                              <td class="text-center"><?= $transaction['total'] ?></td>
+                              <td class="text-center"><?= $total ?></td>
                               <td class="" style="width:25px;">
-                              <a href="user-code.php?id=<?= $userItem['id'];?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?')" ><i class="fa fa-trash"></i></a>
+                              <a href="cart-code.php?id=<?= $transaction['id'];?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?')" ><i class="fa fa-times"></i></a>
                               </td>
                          
                             </tr>
@@ -99,6 +86,33 @@ require_once('modals/cart-modal.php');
             </div>
           <div class="price-panel col-sm-2 mt-0 bg-secondary">
             <div class="card-body ">
+            <?php
+               $query = "SELECT COUNT(*) AS count FROM tblproduct";
+               $query_result = mysqli_query($con, $query);
+               while($row = mysqli_fetch_assoc($query_result))
+               {
+                 $count = $row['count'];
+               }
+               $query = "SELECT sum(price) AS price FROM tblcart";
+               $query_result = mysqli_query($con, $query);
+               while($row = mysqli_fetch_assoc($query_result))
+               {
+                 $sub_total = $row['price'];
+               }
+               $query = "SELECT sum(qty) AS qty FROM tblcart";
+               $query_result = mysqli_query($con, $query);
+               while($row = mysqli_fetch_assoc($query_result))
+               {
+                 $items = $row['qty'];
+               }
+               $query = "SELECT COUNT(*) AS stock FROM tblstock";
+               $query_result = mysqli_query($con, $query);
+               while($row = mysqli_fetch_assoc($query_result))
+               {
+                 $stock = $row['stock'];
+               }
+               
+               ?>
                       <div class="row">
                       <div class="col-sm-9">
                         <div class="mb-1 ">
@@ -120,11 +134,15 @@ require_once('modals/cart-modal.php');
                       <div class="mb-1 ">
                         <label class="d-flex">Total </label>
                         </div>
-                      <br/>
+                        <br/>
+                        <div class="mb-1 ">
+                        <label class="d-flex">Total Items </label>
+                        </div>
+                      
                       </div>
                       <div class="col-sm-3">
                         <div class="mb-0 ">
-                        <label class="ms-5">00:00</label>
+                        <label class="ms-5"><?=$sub_total;?></label>
                         </div>
                       <br/>
                       <div class="mb-0 ">
@@ -143,6 +161,9 @@ require_once('modals/cart-modal.php');
                         <label class="ms-5 float-end">00:00</label>
                         </div>
                       <br/>
+                      <div class="mb-0 ">
+                        <label class="ms-5 float-end"><?=$items;?></label>
+                        </div>
                       </div>
           
                       </div>
@@ -172,7 +193,41 @@ require_once('modals/cart-modal.php');
   require_once('partials/_scripts.php');
   ?>
   <script>
-   
+    //SaveAddTransaction
+ $(document).on('submit','#saveTransaction', function (e){
+    e.preventDefault();
+
+    var formData =new FormData(this);
+    formData.append("cart", true);
+    $.ajax({
+        type: "POST",
+        url: "cart-code.php",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response){
+
+            var res = jQuery.parseJSON(response);
+            if(res.status == 422){
+                $('#errorMessage').removeClass('d-none');
+                $('#errorMessage').text(res.message);
+            }else 
+            if(res.status == 200){
+                $('#errorMessage').addClass('d-none');
+                $('#saveTransaction')[0].reset();
+                $('#stock-add-modal').modal('show');
+                alertify.set('notifier','position','top-right');
+                alertify.success(res.message);
+                $('#myTable_cart').load(location.href + " #myTable_cart");  
+            }
+
+        }
+
+    });
+
+              
+  }
+);
 
     //fade-out alert
 $('.alert').show();
@@ -186,8 +241,8 @@ setTimeout(function() {
       "order": [[ 0, 'desc' ], [ 1, 'desc' ]],
       "pagingType": "full_numbers",
       "lengthMenu":[
-        [10, 25, 50, -1],
-        [10, 25, 50, "All"],
+        [ -1],
+        [ "All"],
       ],
       responsive: true,
       language: {
@@ -225,6 +280,9 @@ function refreshTime() {
 // var datetime = new Date().toDateString();
 // console.log(datetime); // it will represent date in the console of developer tool
 // document.getElementById("time").textContent = datetime; // represent on html page
+
+
+
 </script>
 
 

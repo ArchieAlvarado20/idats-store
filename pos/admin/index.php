@@ -1,19 +1,4 @@
 <?php
-$menu = "";
-$active_main = "";
-$active_dashboard = " active";
-$active_product = "";
-$active_brand = "";
-$active_category = "";
-$stock_menu = "";
-$stock_main = "";
-$active_stocks = "";
-$active_logs = "";
-$active_critical = "";
-$active_pricing = "";
-$user_menu="";
-$user_main="";
-$active_user= "";
 require_once('partials/_head.php');
 require_once('partials/_sidebar.php');
 ?>
@@ -62,7 +47,40 @@ require_once('partials/_sidebar.php');
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
+              <?php
+                 $query = "SELECT sum(price) AS count FROM tblcart";
+                 $query_result = mysqli_query($con, $query);
+                 while($row = mysqli_fetch_assoc($query_result))
+                 {
+                   $sales = $row['count'];
+                 }
+               $query = "SELECT COUNT(*) AS count FROM tblproduct";
+               $query_result = mysqli_query($con, $query);
+               while($row = mysqli_fetch_assoc($query_result))
+               {
+                 $count = $row['count'];
+               }
+               $query = "SELECT sum(qty) AS qty FROM tblproduct";
+               $query_result = mysqli_query($con, $query);
+               while($row = mysqli_fetch_assoc($query_result))
+               {
+                 $qty = $row['qty'];
+               }
+               $query = "SELECT sum(status = 1) AS stock FROM tblproduct";
+               $query_result = mysqli_query($con, $query);
+               while($row = mysqli_fetch_assoc($query_result))
+               {
+                 $stock = $row['stock'];
+               }
+              //  $query = "SELECT * FROM tblproduct as critical WHERE status = 1 Limit 1";
+              //  $query_result = mysqli_query($con, $query);
+              //  while($row = mysqli_fetch_assoc($query_result))
+              //  {
+              //    $critical = $row['critical'];
+              //  }
+               
+               ?>
+                <h3><?=$sales ?></h3>
 
                 <p>Daily Sales</p>
               </div>
@@ -77,21 +95,7 @@ require_once('partials/_sidebar.php');
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <?php
-               $query = "SELECT COUNT(*) AS count FROM tblproduct";
-               $query_result = mysqli_query($con, $query);
-               while($row = mysqli_fetch_assoc($query_result))
-               {
-                 $count = $row['count'];
-               }
-               $query = "SELECT sum(qty) AS qty FROM tblproduct";
-               $query_result = mysqli_query($con, $query);
-               while($row = mysqli_fetch_assoc($query_result))
-               {
-                 $qty = $row['qty'];
-               }
                
-               ?>
                 <h3><?=$count?><sup style="font-size: 20px"></sup></h3>
 
                 <p>Product Line</p>
@@ -122,7 +126,7 @@ require_once('partials/_sidebar.php');
             <!-- small box -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>65</h3>
+                <h3><?= $stock?></h3>
 
                 <p>Critical Items</p>
               </div>

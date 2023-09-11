@@ -14,6 +14,7 @@ $active_pricing = "";
 $user_menu="";
 $user_main="";
 $active_user= "";
+$active_supplier = "";
 require_once('partials/_head.php');
 require_once('partials/_sidebar.php');
 
@@ -37,11 +38,11 @@ require_once('partials/_sidebar.php');
           <div class="col-sm-12">
             <h1 class="fw-bold text-center" style="font-weight: bolder;">Inventory List and Actual Stocks</h1>
           </div>
-          <div class="col-sm-12">
+          <!-- <div class="col-sm-12">
             <ol class="breadcrumb float-sm-right">
             <a href="stock-create.php" class="btn btn-primary text-light">Add stock</a>         
             </ol>
-          </div>
+          </div> -->
         </div>
       </div><!-- /.container-fluid -->
     </section>
@@ -52,7 +53,8 @@ require_once('partials/_sidebar.php');
               <!-- /.card-header -->
               <div class="card-body">
               <?= alertMessage();?></div>
-                <table id="myTable" class="table table-sm table-bordered table-striped bg-light mb-0 text-center">
+                <table id="myTable" class="table table-sm table-bordered table-striped bg-light mb-0 text-center"   keys: {
+        tabIndex: -1>
                   <thead class="bg-light">
                   <tr>
                     <th class="text-center">ID</th>
@@ -62,6 +64,7 @@ require_once('partials/_sidebar.php');
                     <th class="text-center">Re-order</th>
                     <th class="text-center">Actual Stock</th>
                     <th class="text-center">Status</th>
+                   
                  
                   </tr>
                   </thead>
@@ -81,8 +84,8 @@ require_once('partials/_sidebar.php');
                               <td class="text-center" style="font-weight:bolder"><?= $transaction['description'] ?></td>
                               <td class="text-center"><?= $transaction['re_order'] ?></td>
                               <td class="text-center"><?= $transaction['qty'] ?></td> 
-                              <td class="text-center"><?= $transaction['status'] == 1 ? "<span class='badge badge-danger text-sm'>Critical</span>":"<span class='badge badge-success text-sm'>Full Stock</span>" ?></td> 
-                              
+                              <td class="text-center"><?= $transaction['status'] == 1 ? "<span class='badge badge-danger text-sm'>Critical</span>":"<span class='badge badge-success text-sm'>Full</span>" ?>
+                              </td>
                             </tr>
                          
                             
@@ -96,6 +99,7 @@ require_once('partials/_sidebar.php');
                   </tr>
                   </tfoot>
                 </table>
+                
               </div>
               <!-- /.card-body -->
             </div>

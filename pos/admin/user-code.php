@@ -8,7 +8,7 @@ if(isset($_POST['saveUser']))
     $name = validate($_POST['name']);
     $phone = validate($_POST['phone']);
     $email = validate($_POST['email']);
-    $password = validate($_POST['password']);
+    $password = md5(validate($_POST['password']));
     $role = validate($_POST['role']);
     $is_ban = validate($_POST['is_ban']) == true ? 1:0;
     $verify_status = validate($_POST['verify_status']) == true ? 1:0;
@@ -44,7 +44,7 @@ if(isset($_POST['updateUser']))
     $name = validate($_POST['name']);
     $phone = validate($_POST['phone']);
     $email = validate($_POST['email']);
-    $password = validate($_POST['password']);
+    $password = md5(validate($_POST['password']));
     $role = validate($_POST['role']);
     $is_ban = validate($_POST['is_ban']) == true ? 1:0;
     $verify_status = validate($_POST['verify_status']) == true ? 1:0;

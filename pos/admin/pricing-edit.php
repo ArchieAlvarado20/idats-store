@@ -1,24 +1,9 @@
 <?php
-$menu = " menu-open";
-$active_main = " active";
-$active_dashboard = "";
-$active_product = " active";
-$active_brand = "";
-$active_category = "";
-$stock_menu = "";
-$stock_main = "";
-$active_stocks = "";
-$active_logs = "";
-$active_critical = "";
-$active_pricing = "";
-$user_menu="";
-$user_main="";
-$active_user= "";
 require_once('partials/_head.php');
 //save edit price
 if(isset($_POST['updateProduct']))
 {
-    $pcode = $beta;
+    $pcode = 'PC-'.$beta;
     $description = validate($_POST['description']);
     $cost = validate($_POST['cost']);
     $price = validate($_POST['price']);
@@ -112,7 +97,7 @@ require_once('partials/_sidebar.php');
                 </div>
                 <div class="mb-3">
                   <label for="">Description</label>
-                  <input type="text" name="description" id="description" class="form-control" autocomplete="off" value="<?=$user['data']['description'];?>" required>
+                  <input type="text" readonly name="description" id="description" class="form-control" autocomplete="off" value="<?=$user['data']['description'];?>" required>
                 </div>
                 <div class="mb-3">
                   <label for="">Cost</label>
@@ -135,7 +120,7 @@ require_once('partials/_sidebar.php');
                         <input type="hidden" name="date" class="form-control" value="<?php echo date('Y/m/d H:i:s');?>" >
                         </div>
                 <div class="modal-footer">
-                <a href="product-pricing.php"><button type="button" class="btn btn-danger text-light " data-bs-toggle="modal" data-bs-target="#transactionAddModal">
+                <a href="pricing.php"><button type="button" class="btn btn-danger text-light " data-bs-toggle="modal" data-bs-target="#transactionAddModal">
                           Back
                         </button></a>
                 <button type="submit" class="btn btn-primary" name="updateProduct">Save</button>
@@ -169,7 +154,46 @@ require_once('partials/_sidebar.php');
   require_once('partials/_footer.php');
   require_once('partials/_scripts.php');
   ?>
-   
+  <script>
+  //Get profit from addItemModal
+$(document).ready(function(){
+    	// Get value on keyup funtion
+    	$(".price, .cost").keyup(function(){
+
+    	var total=0;    	
+    	var x = Number($(".price").val());
+    	var y = Number($(".cost").val());
+    	var total= x - y;  
+
+    	$('.profit').val(total);
+
+    });
+});
+//profit percentage
+$(function(){
+
+$('#price').on('input', function() {
+  calculate();
+});
+$('#cost').on('input', function() {
+ calculate();
+});
+function calculate(){
+    var price = parseInt($('#price').val()); 
+    var cost = parseInt($('#cost').val());
+    var perc="";
+    if(isNaN(price) || isNaN(cost)){
+        perc="";
+       }else{
+       perc = ((price-cost)/(cost) * 100).toFixed(3);
+       }
+
+    $('#percent').val(perc);
+}
+
+});
+
+</script>
 
   
   

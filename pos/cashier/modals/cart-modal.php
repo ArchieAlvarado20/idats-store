@@ -1,4 +1,4 @@
-<div class="modal fade" id="modal-xl"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="cart-add-modal"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
           <div class="modal-content">
             <div class="modal-header">
@@ -9,7 +9,22 @@
             </div>
             <div class="card p-3">
             <div class="modal-body">
-            <?= alertMessage();?></div>
+            <form action="cart-code.php" method="POST" id="saveTransaction">
+            <div class="row-md-12 d-flex">
+                <div class="col-sm-6">    
+                <div class="mb-3">
+                  <label for="">Qty</label>
+                  <input type="number" name="qty" id="qty" class="form-control" autocomplete="off" required value="1">
+                </div>
+                </div>
+                <div class="col-sm-6">    
+                <div class="mb-3">
+                <label for="" class="w-100 ">Add</label>
+                  <button type="submit"  class="btn btn-primary btn-sm mt-1">+<i class="fa fa-shopping-cart"></i></button> 
+                </div>
+                </div>
+                </div>
+            
                 <table id="myTable_modal" class="table table-sm table-bordered table-striped table-hover">
                   <thead class="bg-light">
                   <tr>
@@ -39,25 +54,29 @@
                               <td class="text-center" style="font-weight:bolder;width:500px;"><?= $transaction['description'] ?></td>
                               <td class="text-center"><?= $transaction['brand'] ?></td>
                               <td class="text-center"><?= $transaction['category'] ?></td>
-                              <td class="text-center"><?= $transaction['price'] ?></td>
+                              <td class="text-center" style="font-weight:bolder;"><?= $transaction['price']; ?></td>
                               <td class="text-center"><?= $transaction['qty'] ?></td>
                               <td  class="text-center">
-                              <a href="product-edit.php?id=<?= $transaction['id'];?>" class="btn btn-sm btn-primary m-0"><i class="fa fa-cart-plus"></i> </a> 
+                              <input type="hidden" value="<?=$_SESSION['auth_user']['username'];?>" name="cashier">
+                              <input type="radio" name="price" value="<?= $transaction['price'];?>">
+                              <input type="radio" name="p_id" value="<?= $transaction['id'] ;?>" class="mt-2">
+                              
                               </td>
                             </tr>
                           <?php
                         }
-                      }
+                      } 
                   ?>
                   </tbody>
                 </table>
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+              <button type="button" class="btn btn-primary" onclick="setTimeout(function(){ window.location=window.location;},1000);">Items</button>
             </div>
           </div>
           </div>
+          </form>
           <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->-

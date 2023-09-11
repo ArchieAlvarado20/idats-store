@@ -1,5 +1,6 @@
 <?php
-if(isset($_SESSION['auth_user'])) : 
+$page = substr($_SERVER['SCRIPT_NAME'], strrpos($_SERVER['SCRIPT_NAME'],"/")+1);
+if(isset($_SESSION['auth_user'])) :
 ?>
 
 <!-- Main Sidebar Container -->
@@ -29,7 +30,7 @@ if(isset($_SESSION['auth_user'])) :
 <?php endif?>
 
       <!-- SidebarSearch Form -->
-      <div class="form-inline">
+      <!-- <div class="form-inline">
         <div class="input-group" data-widget="sidebar-search">
           <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
           <div class="input-group-append">
@@ -38,117 +39,50 @@ if(isset($_SESSION['auth_user'])) :
             </button>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- Sidebar Menu -->
-      <nav class="mt-2">
+      <nav class="mt-0">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
          
           <li class="nav-item">
-            <a href="index.php" class="nav-link<?php echo $active_dashboard;?>">
-              <i class="nav-icon fas fa-th"></i>
+            <a href="index.php" class="nav-link <?= $page == 'index.php' ? 'active' : '';?>">
+              <i class="nav-icon fa-solid fa-gauge"></i>
               <p>
                 Dashboard
                 <!-- <span class="right badge badge-danger">New</span> -->
               </p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+
+          <li class="nav-item <?= $page == 'daily-sales.php'? 'menu-open' : '';?>
+                              <?= $page == 'top-selling.php' ? 'menu-open' : '';?>
+                              <?= $page == 'sold-items.php' ? 'menu-open' : '';?>
+                              <?= $page == 'cancelled-order.php' ? 'menu-open' : '';?>">
+            <a href="#" class="nav-link <?= $page == 'daily-sales.php' ? 'active' : '';?>
+                                        <?= $page == 'top-selling.php' ? 'active' : '';?>
+                                        <?= $page == 'sold-items.php' ? 'active' : '';?>
+                                        <?= $page == 'cancelled-order.php' ? 'active' : '';?>">
+              <i class="nav-icon fa-solid fa-sack-dollar"></i>
               <p>
                 Sales
+                <i class="fas fa-angle-left right"></i>
                 <!-- <span class="right badge badge-danger">New</span> -->
-              </p>
-            </a>
-          </li>
-          
-          <li class="nav-item<?php echo $menu;?>">
-            <a href="" class="nav-link<?php echo $active_main;?>">
-              <i class="nav-icon fas fa-copy"></i>
-              <p>
-                Products
-                <i class="fas fa-angle-left right"></i>
-                <!-- <span class="badge badge-warning right">6</span> -->
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-            <li class="nav-item">
-                <a href="product.php" class="nav-link<?php echo $active_product;?>">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Product</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pricing.php" class="nav-link<?php echo $active_pricing;?>">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Pricing</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="brand.php" class="nav-link<?php echo $active_brand;?>">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Brand</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="category.php" class="nav-link<?php echo $active_category;?>">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Category</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item<?php echo $stock_menu;?>">
-            <a href="" class="nav-link<?php echo $stock_main;?>">
-              <i class="nav-icon fas fa-copy"></i>
-              <p>
-                Stocks
-                <i class="fas fa-angle-left right"></i>
-                <!-- <span class="badge badge-warning right">6</span> -->
               </p>
             </a>
           <ul class="nav nav-treeview">
           <li class="nav-item">
-            <a href="stock-inventory.php" class="nav-link<?php echo $active_stocks;?>">
+            <a href="daily-sales.php" class="nav-link <?= $page == 'daily-sales.php' ? 'active' : '';?>">
               <i class="far fa-circle nav-icon"></i>
               <p>
-                Inventory
+                Daily Sales
                 <!-- <span class="right badge badge-danger">New</span> -->
               </p>
             </a>
           </li>
           <li class="nav-item">
-                <a href="stock-history.php" class="nav-link<?php echo $active_logs;?>">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Stock Logs</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="stock-critical.php" class="nav-link<?php echo $active_critical;?>">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Critical Stock</p>
-                </a>
-              </li>
-          </ul>
-          </li>
-    
-          <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Supplier
-                <!-- <span class="right badge badge-danger">New</span> -->
-              </p>
-            </a>
-          </li>
-           <!-- Divider -->
-        <hr class="my-2 border-2">
-        <!-- Heading -->
-        <h6 class="navbar-heading text-muted">Records</h6>
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="far fa-circle nav-icon"></i>
               <p>
                 Top Selling
                 <!-- <span class="right badge badge-danger">New</span> -->
@@ -157,7 +91,7 @@ if(isset($_SESSION['auth_user'])) :
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="far fa-circle nav-icon"></i>
               <p>
                 Sold Items
                 <!-- <span class="right badge badge-danger">New</span> -->
@@ -168,29 +102,139 @@ if(isset($_SESSION['auth_user'])) :
          
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="far fa-circle nav-icon"></i>
               <p>
                 Cancelled Order
                 <!-- <span class="right badge badge-danger">New</span> -->
               </p>
             </a>
           </li>
-        
+          </ul>
+          </li>
+          <li class="nav-item <?= $page == 'product.php'? 'menu-open' : '';?>
+                              <?= $page == 'product-create.php' ? 'menu-open' : '';?>
+                              <?= $page == 'product-edit.php' ? 'menu-open' : '';?>
+                              <?= $page == 'pricing.php' ? 'menu-open' : '';?>
+                              <?= $page == 'brand.php' ? 'menu-open' : '';?>
+                              <?= $page == 'category.php' ? 'menu-open' : '';?>">
+            <a href="" class="nav-link <?= $page == 'product.php' ? 'active' : '';?>
+                                        <?= $page == 'product-create.php' ? 'active' : '';?>
+                                        <?= $page == 'product-edit.php' ? 'active' : '';?>
+                                        <?= $page == 'pricing.php' ? 'active' : '';?>
+                                        <?= $page == 'brand.php' ? 'active' : '';?>
+                                        <?= $page == 'category.php' ? 'active' : '';?>
+            ">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Products
+                <i class="fas fa-angle-left right"></i>
+                <!-- <span class="badge badge-warning right">6</span> -->
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+            <li class="nav-item">
+                <a href="product.php" class="nav-link <?= $page == 'product.php' ? 'active' : '';?>
+                                                      <?= $page == 'product-edit.php' ? 'active' : '';?>
+                                                      <?= $page == 'product-create.php' ? 'active' : '';?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Product</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="pricing.php" class="nav-link <?= $page == 'pricing.php' ? 'active' : '';?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Pricing</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="brand.php" class="nav-link <?= $page == 'brand.php' ? 'active' : '';?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Brand</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="category.php" class="nav-link <?= $page == 'category.php' ? 'active' : '';?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Category</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item <?= $page == 'reference.php'? 'menu-open' : '';?>
+                              <?= $page == 'reference-create.php'? 'menu-open' : '';?>
+                              <?= $page =='stock-history.php' ? 'menu-open' : '';?>
+                              <?= $page =='stock-inventory.php' ? 'menu-open' : '';?>
+                              <?= $page =='stock-critical.php' ? 'menu-open' : '';?>
+                              <?= $page =='supplier.php' ? 'menu-open' : '';?>">
+            <a href="" class="nav-link <?= $page == 'reference.php'? 'active' : '';?>
+                              <?= $page == 'reference-create.php'? 'active' : '';?>  
+                              <?= $page =='stock-history.php' ? 'active' : '';?>
+                              <?= $page =='stock-inventory.php' ? 'active' : '';?>
+                              <?= $page =='stock-critical.php' ? 'active' : '';?>
+                              <?= $page =='supplier.php' ? 'active' : '';?>">
+              <i class="nav-icon fa-solid fa-box"></i>
+              <p>
+                Stocks
+                <i class="fas fa-angle-left right"></i>
+                <!-- <span class="badge badge-warning right">6</span> -->
+              </p>
+            </a>
+          <ul class="nav nav-treeview">
+          <li class="nav-item">
+                <a href="reference.php" class="nav-link <?= $page == 'reference.php' ? 'active' : '';?>
+                                                        <?= $page == 'reference-create.php'? 'active' : '';?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Reference</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="stock-history.php" class="nav-link <?= $page == 'stock-history.php' ? 'active' : '';?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Stock</p>
+                </a>
+              </li>
+          <li class="nav-item">
+            <a href="stock-inventory.php" class="nav-link <?= $page == 'stock-inventory.php' ? 'active' : '';?>">
+              <i class="far fa-circle nav-icon"></i>
+              <p>
+                Inventory
+                <!-- <span class="right badge badge-danger">New</span> -->
+              </p>
+            </a>
+          </li>
+              <li class="nav-item">
+                <a href="stock-critical.php" class="nav-link <?= $page == 'stock-critical.php' ? 'active' : '';?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Critical Stock</p>
+                </a>
+              </li>
+              <li class="nav-item">
+            <a href="supplier.php" class="nav-link <?= $page == 'supplier.php' ? 'active' : '';?>">
+              <i class="far fa-circle nav-icon"></i>
+              <p>
+                Supplier
+                <!-- <span class="right badge badge-danger">New</span> -->
+              </p>
+            </a>
+          </li>
+          </ul>
+          </li>
+
           <hr class="my-2 border-2">
         <!-- Heading -->
         <h6 class="navbar-heading text-muted">Settings</h6>
         <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="nav-icon fa-solid fa-store "></i>
               <p>
                 Store Setting
                 <!-- <span class="right badge badge-danger">New</span> -->
               </p>
             </a>
           </li>
-          <li class="nav-item <?php echo $user_menu;?>">
-            <a href="" class="nav-link <?php echo $user_main;?>">
-              <i class="nav-icon fas fa-copy"></i>
+          <li class="nav-item <?= $page == 'user.php' ? 'menu-open' : '' ;?>">
+            <a href="" class="nav-link <?= $page == 'user.php' ? 'active' : "" ;?>">
+              <i class="fa-solid fa-user-gear fa-lg"></i>
               <p>
                 User Setting
                 <i class="fas fa-angle-left right"></i>
@@ -199,7 +243,7 @@ if(isset($_SESSION['auth_user'])) :
             </a>
             <ul class="nav nav-treeview">
             <li class="nav-item">
-                <a href="user.php" class="nav-link<?php echo $active_user;?>">
+                <a href="user.php" class="nav-link <?= $page == 'user.php' ? 'active' : "" ;?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>User Account</p>
                 </a>

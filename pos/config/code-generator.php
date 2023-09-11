@@ -12,6 +12,8 @@
     //----------System Generated Numbers------------------------------------------//
     $length = 4;
     $alpha= substr(str_shuffle("QWERTYUIOPLKJHGFDSAZXCVBNM"),1,$length);
+    $length = 2;
+    $alpha1= substr(str_shuffle("QWERTYUIOPLKJHGFDSAZXCVBNM"),1,$length);
     $length = 6;
     $beta = substr(str_shuffle("1234567890"),1,$length);
 

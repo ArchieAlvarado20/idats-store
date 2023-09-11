@@ -48,12 +48,12 @@ require '../config/dbcon.php';
     {
         if(!empty(trim($_POST['name']))&&!empty(trim($_POST['password'])&&!empty(trim($_POST['email']))&&!empty(trim($_POST['confirmpassword']))))
         {
-            if ($_POST["password"] === $_POST["confirmpassword"]) 
+            if (md5($_POST["password"]) === md5($_POST["confirmpassword"])) 
                 {
 
                 $name = $_POST['name'];
                 $email = $_POST['email'];
-                $password = $_POST['password'];
+                $password = md5($_POST['password']);
                 $verify_token = md5(rand());
     
                 //email verification
@@ -104,10 +104,10 @@ require '../config/dbcon.php';
     //login function
 if(isset($_POST['btnLogin']))
 {
-    if(!empty(trim($_POST['email']))&&!empty(trim($_POST['password'])))
+    if(!empty(trim($_POST['email']))&&!empty(md5(trim($_POST['password']))))
     {
         $email = mysqli_real_escape_string($con,$_POST['email']);
-        $password = mysqli_real_escape_string($con,$_POST['password']);
+        $password = mysqli_real_escape_string($con,md5($_POST['password']));
 
         $login_query = "SELECT * FROM tblusers WHERE email='$email' AND password='$password' LIMIT 1";
         $login_query_run = mysqli_query($con, $login_query);

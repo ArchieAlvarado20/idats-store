@@ -54,7 +54,7 @@ function getAll($tableName)
     global $con;
     $table = validate($tableName);
 
-    $qry = "SELECT * FROM $table ORDER BY id DESC";
+    $qry = "SELECT * FROM $table";
     $qry_run = mysqli_query($con, $qry);
     return $qry_run;
 }

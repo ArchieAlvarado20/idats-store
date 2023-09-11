@@ -1,19 +1,4 @@
 <?php
-$menu = " menu-open";
-$active_main = " active";
-$active_dashboard = " ";
-$active_product = "";
-$active_brand = " active";
-$active_category = "";
-$stock_menu = "";
-$stock_main = "";
-$active_stocks = "";
-$active_logs = "";
-$active_critical = "";
-$active_pricing = "";
-$user_menu="";
-$user_main="";
-$active_user= "";
 require_once('partials/_head.php');
 require_once('partials/_sidebar.php');
 ?>
@@ -73,7 +58,7 @@ require_once('partials/_sidebar.php');
                             <tr>
                               <td ><?= $transaction['id'] ?></td>
                               <td style="font-weight:bolder"><?= $transaction['brand'] ?></td>
-                              <td class="p-1">
+                              <td class="p-1" style="width: 200px;">
                                 <button type="button" class="BtnEditTransaction btn btn-sm btn-success m-1" value="<?=$transaction['id'] ?>"><i class="fa fa-edit"></i> Edit</button>
                                 <button type="button" class="BtnDeleteTransaction btn btn-sm btn-danger m-1" value="<?=$transaction['id'] ?>"><i class="fa fa-trash"></i> Delete</button>
                                 

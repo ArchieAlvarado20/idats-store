@@ -21,6 +21,7 @@ if(isset($_SESSION['auth_user'])) :
         </div>
         <div class="info">
           <a href="#" class="d-block px-2 text-sm text-white" style="font-weight: bold; text-transform:uppercase"><?=$_SESSION['auth_user']['username'];?></a><a href="#" class="d-block px-2 text-sm text-white" style="font-weight: regular; text-transform:lowercase"><?=$_SESSION['auth_user']['role'];?></a>
+          
         </div>
       </div>
 <?php endif?>
@@ -42,7 +43,7 @@ if(isset($_SESSION['auth_user'])) :
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
          
           <li class="nav-item">
-            <a href="index.php" class="nav-link<?php echo $active_dashboard;?>">
+            <a href="index.php" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 [F1] New Transaction
@@ -51,7 +52,7 @@ if(isset($_SESSION['auth_user'])) :
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#modal-xl" >
+            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#cart-add-modal" >
               <i class="nav-icon fas fa-th"></i>
               <p>
                 [F2] Search Product
@@ -78,7 +79,7 @@ if(isset($_SESSION['auth_user'])) :
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 [F5] Clear Cart

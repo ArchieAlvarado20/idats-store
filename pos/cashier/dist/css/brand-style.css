@@ -142,10 +142,10 @@ h5{
   padding-bottom: 100px;
 }
 .alert{
-  background-color: rgb(76, 230, 16);
-  color: white;
-  border-radius: 30px;
+  background-color: rgb(130, 180, 112);
+  color: rgb(255, 255, 255);
+  border-radius: 10px;
   border: none;
   text-align: center; 
+  
 }
-

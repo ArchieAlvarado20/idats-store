@@ -1,21 +1,7 @@
 <?php
-$menu = "";
-$active_main = "";
-$active_dashboard = "";
-$active_product = "";
-$active_brand = "";
-$active_category = "";
-$stock_menu = " menu-open";
-$stock_main = " active";
-$active_stocks = "";
-$active_logs = " active";
-$active_critical = "";
-$active_pricing = "";
-$user_menu="";
-$user_main="";
-$active_user= "";
 require_once('partials/_head.php');
 require_once('partials/_sidebar.php');
+require_once('modals/stock-modal.php');
 ?>
 <style>
   @import url('dist/css/brand-style.css');
@@ -38,9 +24,12 @@ require_once('partials/_sidebar.php');
           </div>
           <div class="col-sm-12">
             <ol class="breadcrumb float-sm-right">
-            <a href="stock-create.php" class="btn btn-primary text-light">Add stock</a>         
+            <a href="stock-create.php" class="btn btn-primary text-light" data-bs-toggle="modal" data-bs-target="#stock-add-modal">Add stock</a>         
             </ol>
+            
           </div>
+          
+          
         </div>
       </div><!-- /.container-fluid -->
     </section>
@@ -51,12 +40,14 @@ require_once('partials/_sidebar.php');
               <!-- /.card-header -->
               <div class="card-body">
               <?= alertMessage();?></div>
-                <table id="myTable" class="table table-sm table-bordered table-striped bg-light mb-0 text-center">
+                <table id="myTable1" class="table table-sm table-bordered table-striped bg-light mb-0 text-center">
                   <thead class="bg-light">
                   <tr>
                   <th class="text-center">ID</th>
+                 
                     <th class="text-center">Reference</th>
                     <th class="text-center">Pcode</th>
+                    <th class="text-center">Barcode</th>
                     <th class="text-center">Description</th>
                     <th class="text-center">Qty</th>
                     <th class="text-center">Stocked at</th>
@@ -67,24 +58,31 @@ require_once('partials/_sidebar.php');
                   </thead>
                   <tbody>
                   <?php
-                   $users = getAll('vw_stock');
-                   if(mysqli_num_rows($users) > 0 )
+                   $users = 'SELECT * FROM vw_stock WHERE status = "Done"';
+                   $users_run = mysqli_query($con,$users);
+                   if(mysqli_num_rows($users_run) > 0 )
                    {
-                       foreach($users as $transaction)
+                       foreach($users_run as $transaction)
                        {
                           ?>
                             <tr>
                             <td class="text-center" ><?= $transaction['id'] ?></td>
+               
                               <td class="text-center" ><?= $transaction['refno'] ?></td>
                               <td class="text-center"><?= $transaction['pcode'] ?></td>
-                              <td class="text-center" style="font-weight:bolder"><?= $transaction['description'] ?></td>
+                              <td class="text-center"><?= $transaction['barcode'] ?></td>
+                              <td class="text-center" style="font-weight:bolder;" ><?= $transaction['description'] ?></td>
                               <td class="text-center" ><?= $transaction['qty'] ?></td>
                               <td class="text-center"><?= $transaction['stock_at'] ?></td>
                               <td class="text-center"><?= $transaction['stock_by'] ?></td>
                               <td class="text-center"><?= $transaction['supplier'] ?></td>
                               <td  class="text-center">
-                              <a href="product-edit.php?id=<?= $transaction['id'];?>" class="btn btn-sm btn-success m-0"><i class="fa fa-edit"></i> </a>
-                                <a class="btn btn-sm btn-danger m-0" href="product-code.php?id=<?=$transaction['id'] ?>" onclick="return confirm('Are you sure you want to delete this record?')"><i class="fa fa-trash"></i> </a>
+                              <form action="stock-code.php" method="POST" >
+                                <input type="hidden" name="s_id" value="<?= $transaction['id'] ?>">
+                                <input type="hidden" name="qty" value="<?= $transaction['qty'] ?>">
+                             <button type="submit" class="btn btn-sm btn-danger " name="delete_qty" value="<?=$transaction['p_id'] ?>" onclick="return confirm('Deleting this data will affect the quantity of the product. Are you sure you want to delete this data?')" ><i class="fa fa-trash"></i></button>
+                             </form>
+                         
                                 
                               </td>
                               
@@ -120,10 +118,64 @@ require_once('partials/_sidebar.php');
   <?php
   require_once('partials/_footer.php');
   require_once('partials/_scripts.php');
-  require_once('product-ajax.php');
+
   ?>
+<script>
+   //SaveAddTransaction
+$(document).on('submit','#saveTransaction', function (e){
+    e.preventDefault();
 
+    var formData =new FormData(this);
+    formData.append("stock", true);
+    $.ajax({
+        type: "POST",
+        url: "stock-code.php",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response){
+
+            var res = jQuery.parseJSON(response);
+            if(res.status == 422){
+                $('#errorMessage').removeClass('d-none');
+                $('#errorMessage').text(res.message);
+            }else 
+            if(res.status == 200){
+                $('#errorMessage').addClass('d-none');
+                $('#saveTransaction')[0].reset();
+                $('#stock-add-modal').modal('show');
+                alertify.set('notifier','position','top-right');
+                alertify.success(res.message);
+                $('#myTable1').load(location.href + " #myTable1");  
+            }
+
+        }
+
+    });
+
+              
+  }
+);
+</script>
  
+<script>
+    //data table script
+ $(document).ready(function(){
+    $('#myTable1').DataTable({
+      "order": [[ 0, 'desc' ], [ 0, 'desc' ]],
+      "pagingType": "full_numbers",
+      "lengthMenu":[
+        [15, 25, 50, -1],
+        [15, 25, 50, "All"],
+      ],
+      responsive: true,
+      language: {
+        search: "_INPUT_",
+        searchPlaceholder: "Search here...",
+      },
+    })
+  });
 
+</script>
   
   

@@ -1,60 +1,6 @@
 <?php
-$menu = " menu-open";
-$active_main = " active";
-$active_dashboard = "";
-$active_product = " active";
-$active_brand = "";
-$active_category = "";
-$stock_menu = "";
-$stock_main = "";
-$active_stocks = "";
-$active_logs = "";
-$active_critical = "";
-$active_pricing = "";
-$user_menu="";
-$user_main="";
-$active_user= "";
 require_once('partials/_head.php');
-
-//save edit
-if(isset($_POST['updateProduct']))
-{
-    $pcode = $beta;
-    $barcode = validate($_POST['barcode']);
-    $description = validate($_POST['description']);
-    $brand = validate($_POST['brand']);
-    $category = validate($_POST['category']);
-    $re_order = validate($_POST['re_order']);
-    $userId = validate($_POST['userId']);
-
-    $user = getById('tblproduct',$userId);
-    if($user['status'] != 200)
-    {
-        redirect('product-edit.php?id='.$userId,'No such Id found');
-    }
-    
-    if($pcode != '' && $barcode != '' && $description != '' && $brand != '' && $category != '')
-    {
-        $qry = "UPDATE tblproduct SET pcode='$pcode',barcode='$barcode',description='$description',brand='$brand',category='$category' ,re_order='$re_order' WHERE id='$userId'";
-        $qry_run = mysqli_query($con,$qry); 
-
-        if($qry_run)
-        {
-            redirect('product.php?id='.$userId,'Product successfully updated ');
-        }
-        else
-        {
-            redirect('product-create.php','Something went wrong');
-        }
-    }
-    else
-    {
-      redirect('product-edit.php?id='.$userId,'All fields are required');
-    }
-}
 require_once('partials/_sidebar.php');
-
-
 ?>
 <style>
   @import url('dist/css/brand-style.css');
@@ -92,7 +38,7 @@ require_once('partials/_sidebar.php');
               <!-- /.card-header -->
               <div class="card-body">
               <?= alertMessage();?>
-               <form action="" method="POST" >
+               <form action="product-code.php" method="POST" >
                <?php
                         $paramResult = checkParamId('id');
                         if(!is_numeric($paramResult))
@@ -192,9 +138,47 @@ require_once('partials/_sidebar.php');
   <?php
   require_once('partials/_footer.php');
   require_once('partials/_scripts.php');
-  require_once('product-ajax.php');
   ?>
    
+<script>
+    //Get profit from addItemModal
+$(document).ready(function(){
+    	// Get value on keyup funtion
+    	$(".price, .cost").keyup(function(){
 
+    	var total=0;    	
+    	var x = Number($(".price").val());
+    	var y = Number($(".cost").val());
+    	var total= x - y;  
+
+    	$('.profit').val(total);
+
+    });
+});
+//profit percentage
+$(function(){
+
+$('#price').on('input', function() {
+  calculate();
+});
+$('#cost').on('input', function() {
+ calculate();
+});
+function calculate(){
+    var price = parseInt($('#price').val()); 
+    var cost = parseInt($('#cost').val());
+    var perc="";
+    if(isNaN(price) || isNaN(cost)){
+        perc=" ";
+       }else{
+       perc = ((price-cost)/(cost) * 100).toFixed(3);
+       }
+
+    $('#percent').val(perc);
+}
+
+});
+
+</script>
   
   

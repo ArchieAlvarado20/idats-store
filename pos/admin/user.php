@@ -1,19 +1,4 @@
 <?php 
-$menu = "";
-$active_main = " ";
-$active_dashboard = "";
-$active_product = " ";
-$active_brand = "";
-$active_category = "";
-$stock_menu = "";
-$stock_main = "";
-$active_stocks = "";
-$active_logs = "";
-$active_critical = "";
-$active_pricing = "";
-$user_menu = " menu-open";
-$user_main = " active";
-$active_user= " active";
 require_once('partials/_head.php');
 require_once('partials/_sidebar.php');
 ?>

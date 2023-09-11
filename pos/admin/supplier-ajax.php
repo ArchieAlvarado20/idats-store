@@ -8,7 +8,7 @@ $(document).on('submit','#saveTransaction', function (e){
     formData.append("save_Transaction", true);
     $.ajax({
         type: "POST",
-        url: "brand-code.php",
+        url: "supplier-code.php",
         data: formData,
         processData: false,
         contentType: false,
@@ -35,27 +35,6 @@ $(document).on('submit','#saveTransaction', function (e){
               
   }
 );
-//retrieve data
-$(document).on('click','.BtnEditTransaction', function (){
- var transaction_id = $(this).val();
-
-$.ajax({
-  type: "GET",
-  url: "brand-code.php?transaction_id=" + transaction_id,
-  success: function (response){
-    var res = jQuery.parseJSON(response);
-    if(res.status == 422){
-                alert(res.message);
-            }else 
-            if(res.status == 200){
-                $('#transaction_id').val(res.data.id);
-                $('#brand').val(res.data.brand);
-                $('#transactionEditModal').modal('show');
-            }
-  }
-});
-
-});
 //update data
 $(document).on('submit','#updateTransaction', function (e){
     e.preventDefault();
@@ -64,7 +43,7 @@ $(document).on('submit','#updateTransaction', function (e){
     formData.append("update_Transaction", true);
     $.ajax({
         type: "POST",
-        url: "brand-code.php",
+        url: "supplier-code.php",
         data: formData,
         processData: false,
         contentType: false,
@@ -90,6 +69,34 @@ $(document).on('submit','#updateTransaction', function (e){
     });            
   }
 );
+
+//retrieve data
+$(document).on('click','.BtnEditTransaction', function (){
+ var transaction_id = $(this).val();
+
+$.ajax({
+  type: "GET",
+  url: "supplier-code.php?transaction_id=" + transaction_id,
+  success: function (response){
+    var res = jQuery.parseJSON(response);
+    if(res.status == 422){
+                alert(res.message);
+            }else 
+            if(res.status == 200){
+                $('#transaction_id').val(res.data.id);
+                $('#supplier').val(res.data.supplier);
+                $('#contact_person').val(res.data.contact_person);
+                $('#phone').val(res.data.phone);
+                $('#email').val(res.data.email);
+                $('#address').val(res.data.address);
+
+                $('#transactionEditModal').modal('show');
+            }
+  }
+});
+
+});
+
 //DeleteStundent
 $(document).on('click','.BtnDeleteTransaction', function (e){
     e.preventDefault();
@@ -99,7 +106,7 @@ $(document).on('click','.BtnDeleteTransaction', function (e){
     var transaction_id = $(this).val();
     $.ajax({
       type: "POST",
-      url: "brand-code.php",
+      url: "supplier-code.php",
       data: {
         'delete_transaction':true,
         'transaction_id':transaction_id
